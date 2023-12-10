@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/count-api/count-api.iml" filepath="$PROJECT_DIR$/count-api/count-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/count-app/count-app.iml" filepath="$PROJECT_DIR$/count-app/count-app.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/count-service.iml" filepath="$PROJECT_DIR$/.idea/count-service.iml" />
     </modules>
   </component>
