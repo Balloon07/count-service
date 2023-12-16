@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.balloon.integration.dal.count_config.mapper.CountConfigMapper">
+  <resultMap id="BaseResultMap" type="com.balloon.integration.dal.count_config.entity.CountConfigEntity">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="updater" jdbcType="VARCHAR" property="updater" />
+    <result column="count_id" jdbcType="VARCHAR" property="countId" />
+    <result column="count_type" jdbcType="VARCHAR" property="countType" />
+    <result column="count_name" jdbcType="VARCHAR" property="countName" />
+    <result column="dimension_type" jdbcType="VARCHAR" property="dimensionType" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="count_rule" jdbcType="VARCHAR" property="countRule" />
+    <result column="extend_info" jdbcType="VARCHAR" property="extendInfo" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, create_time, update_time, creator, updater, count_id, count_type, count_name, 
+    dimension_type, state, start_time, end_time, count_rule, extend_info
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from count_config
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from count_config
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.balloon.integration.dal.count_config.entity.CountConfigEntity">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into count_config (create_time, update_time, creator, 
+      updater, count_id, count_type, 
+      count_name, dimension_type, state, 
+      start_time, end_time, count_rule, 
+      extend_info)
+    values (#{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{creator,jdbcType=VARCHAR}, 
+      #{updater,jdbcType=VARCHAR}, #{countId,jdbcType=VARCHAR}, #{countType,jdbcType=VARCHAR}, 
+      #{countName,jdbcType=VARCHAR}, #{dimensionType,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR}, 
+      #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{countRule,jdbcType=VARCHAR}, 
+      #{extendInfo,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.balloon.integration.dal.count_config.entity.CountConfigEntity">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into count_config
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="creator != null">
+        creator,
+      </if>
+      <if test="updater != null">
+        updater,
+      </if>
+      <if test="countId != null">
+        count_id,
+      </if>
+      <if test="countType != null">
+        count_type,
+      </if>
+      <if test="countName != null">
+        count_name,
+      </if>
+      <if test="dimensionType != null">
+        dimension_type,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="startTime != null">
+        start_time,
+      </if>
+      <if test="endTime != null">
+        end_time,
+      </if>
+      <if test="countRule != null">
+        count_rule,
+      </if>
+      <if test="extendInfo != null">
+        extend_info,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="updater != null">
+        #{updater,jdbcType=VARCHAR},
+      </if>
+      <if test="countId != null">
+        #{countId,jdbcType=VARCHAR},
+      </if>
+      <if test="countType != null">
+        #{countType,jdbcType=VARCHAR},
+      </if>
+      <if test="countName != null">
+        #{countName,jdbcType=VARCHAR},
+      </if>
+      <if test="dimensionType != null">
+        #{dimensionType,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="countRule != null">
+        #{countRule,jdbcType=VARCHAR},
+      </if>
+      <if test="extendInfo != null">
+        #{extendInfo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.balloon.integration.dal.count_config.entity.CountConfigEntity">
+    update count_config
+    <set>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null">
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="updater != null">
+        updater = #{updater,jdbcType=VARCHAR},
+      </if>
+      <if test="countId != null">
+        count_id = #{countId,jdbcType=VARCHAR},
+      </if>
+      <if test="countType != null">
+        count_type = #{countType,jdbcType=VARCHAR},
+      </if>
+      <if test="countName != null">
+        count_name = #{countName,jdbcType=VARCHAR},
+      </if>
+      <if test="dimensionType != null">
+        dimension_type = #{dimensionType,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null">
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="countRule != null">
+        count_rule = #{countRule,jdbcType=VARCHAR},
+      </if>
+      <if test="extendInfo != null">
+        extend_info = #{extendInfo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.balloon.integration.dal.count_config.entity.CountConfigEntity">
+    update count_config
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      creator = #{creator,jdbcType=VARCHAR},
+      updater = #{updater,jdbcType=VARCHAR},
+      count_id = #{countId,jdbcType=VARCHAR},
+      count_type = #{countType,jdbcType=VARCHAR},
+      count_name = #{countName,jdbcType=VARCHAR},
+      dimension_type = #{dimensionType,jdbcType=VARCHAR},
+      state = #{state,jdbcType=VARCHAR},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      count_rule = #{countRule,jdbcType=VARCHAR},
+      extend_info = #{extendInfo,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

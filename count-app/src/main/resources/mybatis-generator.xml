@@ -16,7 +16,7 @@
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
                         connectionURL="jdbc:mysql://127.0.0.1:3306/count_config"
                         userId="root"
-                        password="789456">
+                        password="xiaowei789456">
         </jdbcConnection>
 
         <!--默认false -->

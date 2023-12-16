@@ -64,8 +64,8 @@ todo
 
 =====
 
-count-api/app分层设计
-生成数据库实体类和mapper
+count-api/app分层设计 done
+生成数据库实体类和mapper done
 B侧api定义
 创建计次实现
 repository语义转换
