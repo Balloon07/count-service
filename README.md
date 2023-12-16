@@ -59,4 +59,33 @@ todo
 
 ## 七、快速开始
 todo
+分库分表：conunt-config实例、count_user实例（实例中有十个库）
+
+
+=====
+
+count-api/app分层设计
+生成数据库实体类和mapper
+B侧api定义
+创建计次实现
+repository语义转换
+count_config数据库配置
+B侧api功能自测
+
+
+c侧api定义
+c侧api实现
+sharding分库分表
+repository语义转换
+计次查询
+计次准入
+计次逆向
+查询用户计次纪录
+c侧功能自测
+
+压力测试
+
+
+
+
 

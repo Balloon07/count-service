@@ -1,3 +1,4 @@
 /.idea/
 *.iml
 /count-app/target
+/count-api/target/
