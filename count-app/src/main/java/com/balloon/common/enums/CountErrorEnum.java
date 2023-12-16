@@ -12,7 +12,6 @@ import lombok.Getter;
 public enum CountErrorEnum {
 
     SYSTEM_ERROR(5000L, "服务异常"),
-
     PARAM_ERROR(5001L, "参数异常"),
 
     ;
