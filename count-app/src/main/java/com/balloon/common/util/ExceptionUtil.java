@@ -13,9 +13,9 @@ public class ExceptionUtil {
     public static Result toResult(Throwable e) {
         Result result = new Result();
         if (e instanceof CountException) {
-            CountErrorEnum error = ((CountException) e).getError();
-            result.setCode(error.getErrorCode());
-            result.setMsg(error.getErrorMsg());
+            CountException error = (CountException) e;
+            result.setCode(error.getCode());
+            result.setMsg(error.getMessage());
         } else if (e instanceof IllegalArgumentException) {
             result.setCode(CountErrorEnum.PARAM_ERROR.getErrorCode());
             result.setMsg(CountErrorEnum.PARAM_ERROR.getErrorMsg() + "-" + e.getMessage());
