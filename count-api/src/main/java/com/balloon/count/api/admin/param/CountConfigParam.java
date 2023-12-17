@@ -40,11 +40,6 @@ public class CountConfigParam implements Serializable {
     private String dimensionType;
 
     /**
-     * 状态 {@link CountStateEnum}
-     */
-    private String state;
-
-    /**
      * 计次周期
      */
     private Date startTime;

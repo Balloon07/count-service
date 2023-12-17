@@ -22,5 +22,5 @@ public interface CountService {
      * @param param
      * @return
      */
-    String createConfig(CountConfigParam param);
+    String saveConfig(CountConfigParam param);
 }

@@ -36,7 +36,7 @@ public class CountConfigApiImpl implements CountConfigApi {
     @Override
     public Result<String> createCountConfig(CountConfigParam param) {
         try {
-            String result = countService.createConfig(param);
+            String result = countService.saveConfig(param);
             log.info("创建计次配置, param={} result={}", JsonUtil.toJson(param), result);
             return Result.ofSuccess(null);
         } catch (Throwable e) {
