@@ -19,12 +19,18 @@ import javax.sql.DataSource;
  * @date 2023-12-15 18:40
  */
 @Configuration
-@MapperScan(basePackages = {"com.balloon.integration.dal.count_config.mapper"},
+@MapperScan(basePackages = {"com.balloon.integration.dal.count_config"},
         sqlSessionFactoryRef = "countConfigSqlSessionFactory")
 public class CountConfigDataSourceConfig {
 
+    /*
+        DataSource主要用于获取数据库连接，
+        SqlSessionFactory用于创建SqlSession对象，SqlSession是与数据库交互的主要对象，
+        而DataSourceTransactionManager用于管理数据库事务。
+     */
+
     @Bean
-    @ConfigurationProperties(prefix = "count.config.mysql")
+    @ConfigurationProperties(prefix = "mysql.count-config")
     public DataSource countConfigDataSource() {
         return new DruidDataSource();
     }
@@ -33,7 +39,7 @@ public class CountConfigDataSourceConfig {
     public SqlSessionFactory countConfigSqlSessionFactory(@Qualifier("countConfigDataSource") DataSource dataSource) throws Exception {
         SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
         factoryBean.setDataSource(dataSource);
-        factoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath*:mapper/*.xml"));
+        factoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath*:mapper/**/*.xml"));
         return factoryBean.getObject();
     }
 
@@ -46,5 +52,4 @@ public class CountConfigDataSourceConfig {
     public DataSourceTransactionManager countConfigTransactionManager(@Qualifier("countConfigDataSource") DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
     }
-
 }
