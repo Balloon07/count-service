@@ -1,20 +1,19 @@
-package com.balloon.core.repository.model;
+package com.balloon.count.api.admin.dto;
 
-import com.balloon.count.api.common.enums.CountStateEnum;
-import com.balloon.count.api.common.enums.CountTypeEnum;
-import com.balloon.count.api.common.enums.DimensionTypeEnum;
+import com.balloon.count.api.common.enums.*;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * @author 王思远
- * @date 2023-12-17 03:22
+ * @date 2024-02-23 17:12
  */
 @Data
-public class CountConfigModel {
+public class CountConfigDto implements Serializable {
 
     /**
      * 创建时间
@@ -74,11 +73,10 @@ public class CountConfigModel {
     /**
      * 计次规则
      */
-    private CountRuleModel countRule;
+    private CountRuleDto countRule;
 
     /**
      * 扩展信息
      */
     private Map<String, Object> extendInfo = new HashMap<>();
-
 }

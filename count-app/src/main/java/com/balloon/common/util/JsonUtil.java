@@ -68,6 +68,7 @@ public class JsonUtil {
     }
 
     private JsonUtil() {
+
     }
 
     public static String toJson(Object obj) {

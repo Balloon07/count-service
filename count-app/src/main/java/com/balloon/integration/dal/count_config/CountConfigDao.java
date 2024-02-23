@@ -10,4 +10,6 @@ import com.balloon.integration.dal.count_config.mapper.CountConfigMapper;
 public interface CountConfigDao extends CountConfigMapper {
 
     int updateByCountId(CountConfigEntity entity);
+
+    CountConfigEntity getByCountId(String countId);
 }

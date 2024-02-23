@@ -40,17 +40,17 @@ B侧接口：CountConfigApi
     Result<String> generateCountId(String countType);
 2. 创建计次配置
     Result<String> createCountConfig(CountConfigParam param);
-
-C侧接口：CountServiceApi 
-1. 查询计次配置
+3. 查询计次配置
     Result<CountConfigDto> queryCountConfig(String countId);
-2. 计次查询/校验
+    
+C侧接口：CountServiceApi 
+1. 计次查询
     Result<CountCheckDto> checkCount(CountCheckParam param);
-3. 计次准入
+2. 计次准入
     Result<CountResultDto> insertCount(CountInsertParam param);
-4. 计次逆向
+3. 计次逆向
     Result<CountResultDto> rollbackCount(CountRollbackParam param);
-5. 用户计次纪录查询
+4. 用户计次纪录查询
     Result<CountUserRecordDto> queryUserCountRecord(CountUserRecordParam param);
 ```
 
@@ -61,28 +61,27 @@ todo
 
 分库分表： count-config实例、count_user实例（十库十表）
 
+toB ✈️
+- count-api/app分层设计 done
+- 生成数据库实体类和mapper done
+- B侧api定义 done
+- 生成计次配置id done
+- repository语义转换 done
+- count_config数据源配置 done
+- 创建计次实现 done
+- B侧api功能自测 done
 
-count-api/app分层设计 done
-生成数据库实体类和mapper done
-B侧api定义 done
-生成计次配置id done
-repository语义转换 done
-创建计次实现 
-count_config数据库配置
-B侧api功能自测
-
-
-c侧api定义
-c侧api实现
-sharding分库分表
-repository语义转换
-计次查询
-计次准入
-计次逆向
-查询用户计次纪录
-c侧功能自测
-
-压力测试
+toC ✈️
+- c侧api定义
+- c侧api实现
+- sharding分库分表
+- repository语义转换
+- 计次查询
+- 计次准入
+- 计次逆向
+- 查询用户计次纪录
+- c侧功能自测
+- 压力测试
 
 
 

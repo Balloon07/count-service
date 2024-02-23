@@ -1,5 +1,7 @@
 package com.balloon.count.api.common.enums;
 
+import java.util.stream.Stream;
+
 /**
  * 周期单位
  *
@@ -42,4 +44,9 @@ public enum TimeUnitEnum {
      * 终生
      */
     life,
+    ;
+
+    public static TimeUnitEnum getByName(String unit) {
+        return Stream.of(TimeUnitEnum.values()).filter(item -> item.name().equals(unit)).findFirst().orElse(null);
+    }
 }

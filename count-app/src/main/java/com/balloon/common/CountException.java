@@ -12,13 +12,18 @@ public class CountException extends RuntimeException {
     @Getter
     private final long code;
 
-    public CountException(int code, String message) {
+    public CountException(long code, String message) {
         super(message);
         this.code = code;
     }
 
     public CountException(CountErrorEnum error) {
         super(error.getErrorMsg());
+        this.code = error.getErrorCode();
+    }
+
+    public CountException(CountErrorEnum error, Object... args){
+        super(String.format(error.getErrorMsg(), args));
         this.code = error.getErrorCode();
     }
 

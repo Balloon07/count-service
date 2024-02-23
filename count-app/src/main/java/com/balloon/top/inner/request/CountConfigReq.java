@@ -1,6 +1,9 @@
-package com.balloon.count.api.admin.param;
+package com.balloon.top.inner.request;
 
-import com.balloon.count.api.common.enums.*;
+import com.balloon.count.api.common.enums.CountTypeEnum;
+import com.balloon.count.api.common.enums.CycleTypeEnum;
+import com.balloon.count.api.common.enums.DimensionTypeEnum;
+import com.balloon.count.api.common.enums.TimeUnitEnum;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -15,10 +18,10 @@ import java.util.Map;
  * 3.终生一次or活动周期内一次：cycleType=life, timeTotal=1 <p>
  *
  * @author 王思远
- * @date 2023-12-16 17:41
+ * @date 2024-02-21 15:22
  */
 @Data
-public class CountConfigParam implements Serializable {
+public class CountConfigReq implements Serializable {
 
     /**
      * 计次id
@@ -79,4 +82,5 @@ public class CountConfigParam implements Serializable {
      * 操作人
      */
     private String operator;
+
 }

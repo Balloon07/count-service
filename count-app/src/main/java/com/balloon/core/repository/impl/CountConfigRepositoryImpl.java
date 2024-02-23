@@ -22,7 +22,7 @@ public class CountConfigRepositoryImpl implements CountConfigRepository {
     public String create(CountConfigModel model) {
         CountConfigEntity entity = CountConfigConverter.convertToEntity(model);
         countConfigDao.insertSelective(entity);
-        return model.getCountId();
+        return entity.getCountId();
     }
 
     @Override
@@ -33,6 +33,7 @@ public class CountConfigRepositoryImpl implements CountConfigRepository {
 
     @Override
     public CountConfigModel getByCountId(String countId) {
-        return null;
+        CountConfigEntity entity = countConfigDao.getByCountId(countId);
+        return CountConfigConverter.convertToModel(entity);
     }
 }

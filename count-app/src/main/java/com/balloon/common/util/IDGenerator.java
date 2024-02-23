@@ -13,11 +13,11 @@ public class IDGenerator {
 
     private static final DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
 
-    public String generateId() {
+    public static String generateId() {
         return dateFormat.format(new Date()) + random(8);
     }
 
-    private String random(int len) {
+    private static String random(int len) {
         return UUID.randomUUID().toString().replace("-", "").substring(0, len);
     }
 

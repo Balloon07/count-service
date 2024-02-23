@@ -8,5 +8,45 @@
     </sql>
 
 
+    <update id="updateByCountId" parameterType="com.balloon.integration.dal.count_config.entity.CountConfigEntity">
+        update count_config
+        <set>
+            <if test="updater != null">
+                updater = #{updater,jdbcType=VARCHAR},
+            </if>
+            <if test="countType != null">
+                count_type = #{countType,jdbcType=VARCHAR},
+            </if>
+            <if test="countName != null">
+                count_name = #{countName,jdbcType=VARCHAR},
+            </if>
+            <if test="dimensionType != null">
+                dimension_type = #{dimensionType,jdbcType=VARCHAR},
+            </if>
+            <if test="state != null">
+                state = #{state,jdbcType=VARCHAR},
+            </if>
+            <if test="startTime != null">
+                start_time = #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="countRule != null">
+                count_rule = #{countRule,jdbcType=VARCHAR},
+            </if>
+            <if test="extendInfo != null">
+                extend_info = #{extendInfo,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where count_id = #{countId,jdbcType=VARCHAR}
+    </update>
+
+    <select id="getByCountId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from count_config
+        where count_id = #{countId,jdbcType=VARCHAR}
+    </select>
 
 </mapper>

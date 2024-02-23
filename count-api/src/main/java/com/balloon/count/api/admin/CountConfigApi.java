@@ -1,5 +1,6 @@
 package com.balloon.count.api.admin;
 
+import com.balloon.count.api.admin.dto.CountConfigDto;
 import com.balloon.count.api.admin.param.CountConfigParam;
 import com.balloon.count.api.common.Result;
 
@@ -26,5 +27,13 @@ public interface CountConfigApi {
      * @return
      */
     Result<String> createCountConfig(CountConfigParam param);
+
+    /**
+     * 查询计次配置
+     *
+     * @param countId
+     * @return
+     */
+    Result<CountConfigDto> queryCountConfig(String countId);
 
 }

@@ -1,5 +1,7 @@
 package com.balloon.count.api.common.enums;
 
+import java.util.stream.Stream;
+
 /**
  * 计次维度
  *
@@ -27,5 +29,9 @@ public enum DimensionTypeEnum {
      * 设备号
      */
     deviceId,
+    ;
 
+    public static DimensionTypeEnum getByName(String type) {
+        return Stream.of(DimensionTypeEnum.values()).filter(item -> item.name().equals(type)).findFirst().orElse(null);
+    }
 }
