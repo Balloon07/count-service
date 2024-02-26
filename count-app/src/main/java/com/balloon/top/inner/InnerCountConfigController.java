@@ -7,6 +7,7 @@ import com.balloon.count.api.admin.dto.CountConfigDto;
 import com.balloon.count.api.admin.param.CountConfigParam;
 import com.balloon.count.api.common.Result;
 import com.balloon.top.inner.request.CountConfigReq;
+import com.balloon.top.inner.response.CountConfigResp;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,17 +46,19 @@ public class InnerCountConfigController {
             log.info("创建计次配置, req={} countId={}", JsonUtil.toJson(req), countId);
             return Result.ofSuccess(countId);
         } catch (Throwable e) {
-            log.error("创建计次配置异常, param={}", JsonUtil.toJson(req), e);
+            log.error("创建计次配置异常, req={}", JsonUtil.toJson(req), e);
             return ExceptionUtil.toResult(e);
         }
     }
 
     @PostMapping("queryConfig")
-    public Result<CountConfigDto> queryConfig(@RequestParam String countId) {
+    public Result<CountConfigResp> queryConfig(@RequestParam String countId) {
         try {
             CountConfigDto countConfig = countConfigService.queryConfig(countId);
-            log.info("查询计次配置, countId={} result={}", countId, JsonUtil.toJson(countConfig));
-            return Result.ofSuccess(countConfig);
+            CountConfigResp resp = new CountConfigResp();
+            BeanUtils.copyProperties(countConfig, resp);
+            log.info("查询计次配置, countId={} resp={}", countId, JsonUtil.toJson(resp));
+            return Result.ofSuccess(resp);
         } catch (Throwable e) {
             log.error("查询计次配置异常, countId={}", countId, e);
             return ExceptionUtil.toResult(e);

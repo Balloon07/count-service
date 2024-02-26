@@ -15,8 +15,8 @@ import org.springframework.stereotype.Service;
  * @author 王思远
  * @date 2023-12-16 18:39
  */
-@Service
 @Slf4j
+@Service
 public class CountConfigApiImpl implements CountConfigApi {
 
     @Autowired
@@ -29,7 +29,7 @@ public class CountConfigApiImpl implements CountConfigApi {
             log.info("生成计次配置id, countType={} countId={}", countType, countId);
             return Result.ofSuccess(countId);
         } catch (Throwable e) {
-            log.error("计次服务-生成计次配置id异常, countType={}", countType, e);
+            log.error("生成计次配置id异常, countType={}", countType, e);
             return ExceptionUtil.toResult(e);
         }
     }
@@ -49,9 +49,9 @@ public class CountConfigApiImpl implements CountConfigApi {
     @Override
     public Result<CountConfigDto> queryCountConfig(String countId) {
         try {
-            CountConfigDto countConfig = countConfigService.queryConfig(countId);
-            log.info("查询计次配置, countId={} result={}", countId, JsonUtil.toJson(countConfig));
-            return Result.ofSuccess(countConfig);
+            CountConfigDto result = countConfigService.queryConfig(countId);
+            log.info("查询计次配置, countId={} result={}", countId, JsonUtil.toJson(result));
+            return Result.ofSuccess(result);
         } catch (Throwable e) {
             log.error("查询计次配置异常, countId={}", countId, e);
             return ExceptionUtil.toResult(e);
