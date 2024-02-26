@@ -65,17 +65,37 @@ Result<CountConfigDto> queryCountConfig(String countId);
 
 C侧接口定义：CountServiceApi
 ```
-1. 计次查询
-    Result<CountCheckDto> checkCount(CountCheckParam param);
-    
-2. 计次准入
-    Result<CountResultDto> insertCount(CountInsertParam param);
-    
-3. 计次逆向
-    Result<CountResultDto> rollbackCount(CountRollbackParam param);
-    
-4. 用户计次纪录查询
-    Result<CountUserRecordDto> queryUserCountRecord(CountUserRecordParam param);
+/**
+ * 计次查询
+ *
+ * @param param
+ * @return
+ */
+Result<CountQueryDto> queryCount(CountQueryParam param);
+
+/**
+ * 计次准入
+ *
+ * @param param
+ * @return
+ */
+Result<CountInsertDto> insertCount(CountInsertParam param);
+
+/**
+ * 计次逆向
+ *
+ * @param param
+ * @return
+ */
+Result<CountRollbackDto> rollbackCount(CountRollbackParam param);
+
+/**
+ * 用户计次纪录查询
+ *
+ * @param param
+ * @return
+ */
+Result<CountUserRecordDto> queryUserCountRecord(CountUserRecordParam param);
 ```
 
 ## 六、压力测试
