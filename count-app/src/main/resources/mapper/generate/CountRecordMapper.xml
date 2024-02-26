@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.balloon.integration.dal.count_user.mapper.CountRecordMapper">
+  <resultMap id="BaseResultMap" type="com.balloon.integration.dal.count_user.entity.CountRecordEntity">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="request_no" jdbcType="VARCHAR" property="requestNo" />
+    <result column="dimension_type" jdbcType="VARCHAR" property="dimensionType" />
+    <result column="dimension_id" jdbcType="VARCHAR" property="dimensionId" />
+    <result column="count_id" jdbcType="VARCHAR" property="countId" />
+    <result column="count_type" jdbcType="VARCHAR" property="countType" />
+    <result column="count_num" jdbcType="INTEGER" property="countNum" />
+    <result column="occur_time" jdbcType="TIMESTAMP" property="occurTime" />
+    <result column="extend_info" jdbcType="VARCHAR" property="extendInfo" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, create_time, update_time, request_no, dimension_type, dimension_id, count_id, 
+    count_type, count_num, occur_time, extend_info
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from count_record
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from count_record
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.balloon.integration.dal.count_user.entity.CountRecordEntity">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into count_record (create_time, update_time, request_no, 
+      dimension_type, dimension_id, count_id, 
+      count_type, count_num, occur_time, 
+      extend_info)
+    values (#{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{requestNo,jdbcType=VARCHAR}, 
+      #{dimensionType,jdbcType=VARCHAR}, #{dimensionId,jdbcType=VARCHAR}, #{countId,jdbcType=VARCHAR}, 
+      #{countType,jdbcType=VARCHAR}, #{countNum,jdbcType=INTEGER}, #{occurTime,jdbcType=TIMESTAMP}, 
+      #{extendInfo,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.balloon.integration.dal.count_user.entity.CountRecordEntity">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into count_record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="requestNo != null">
+        request_no,
+      </if>
+      <if test="dimensionType != null">
+        dimension_type,
+      </if>
+      <if test="dimensionId != null">
+        dimension_id,
+      </if>
+      <if test="countId != null">
+        count_id,
+      </if>
+      <if test="countType != null">
+        count_type,
+      </if>
+      <if test="countNum != null">
+        count_num,
+      </if>
+      <if test="occurTime != null">
+        occur_time,
+      </if>
+      <if test="extendInfo != null">
+        extend_info,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="requestNo != null">
+        #{requestNo,jdbcType=VARCHAR},
+      </if>
+      <if test="dimensionType != null">
+        #{dimensionType,jdbcType=VARCHAR},
+      </if>
+      <if test="dimensionId != null">
+        #{dimensionId,jdbcType=VARCHAR},
+      </if>
+      <if test="countId != null">
+        #{countId,jdbcType=VARCHAR},
+      </if>
+      <if test="countType != null">
+        #{countType,jdbcType=VARCHAR},
+      </if>
+      <if test="countNum != null">
+        #{countNum,jdbcType=INTEGER},
+      </if>
+      <if test="occurTime != null">
+        #{occurTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="extendInfo != null">
+        #{extendInfo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.balloon.integration.dal.count_user.entity.CountRecordEntity">
+    update count_record
+    <set>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="requestNo != null">
+        request_no = #{requestNo,jdbcType=VARCHAR},
+      </if>
+      <if test="dimensionType != null">
+        dimension_type = #{dimensionType,jdbcType=VARCHAR},
+      </if>
+      <if test="dimensionId != null">
+        dimension_id = #{dimensionId,jdbcType=VARCHAR},
+      </if>
+      <if test="countId != null">
+        count_id = #{countId,jdbcType=VARCHAR},
+      </if>
+      <if test="countType != null">
+        count_type = #{countType,jdbcType=VARCHAR},
+      </if>
+      <if test="countNum != null">
+        count_num = #{countNum,jdbcType=INTEGER},
+      </if>
+      <if test="occurTime != null">
+        occur_time = #{occurTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="extendInfo != null">
+        extend_info = #{extendInfo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.balloon.integration.dal.count_user.entity.CountRecordEntity">
+    update count_record
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      request_no = #{requestNo,jdbcType=VARCHAR},
+      dimension_type = #{dimensionType,jdbcType=VARCHAR},
+      dimension_id = #{dimensionId,jdbcType=VARCHAR},
+      count_id = #{countId,jdbcType=VARCHAR},
+      count_type = #{countType,jdbcType=VARCHAR},
+      count_num = #{countNum,jdbcType=INTEGER},
+      occur_time = #{occurTime,jdbcType=TIMESTAMP},
+      extend_info = #{extendInfo,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

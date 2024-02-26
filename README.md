@@ -125,7 +125,8 @@ B测功能：✅
 
 C测功能：
 - C侧api定义 ✈️
-- count_user数据源配置
+- count_user数据源配置 ✈️
+- 数据库实体类和对应mapper ✈️
 - repository语义转换
 - sharding分库分表
 - 计次查询
