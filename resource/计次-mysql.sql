@@ -1,3 +1,4 @@
+# count-config实例：单库单表
 CREATE TABLE `count_config` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增id',
   `create_time` datetime(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) COMMENT '创建时间',
@@ -17,10 +18,10 @@ CREATE TABLE `count_config` (
   UNIQUE KEY `uk_count_id` (`count_id`),
   KEY `idx_count_type` (`count_type`),
   KEY `idx_create_time` (`create_time`)
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin COMMENT = '计次配置表'
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin COMMENT = '计次配置表';
 
-
-CREATE TABLE `count_record` (
+# count_user实例：十库十表，以dimension_id字段后两位进行分库分表
+CREATE TABLE `count_record_xx` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增id',
   `create_time` datetime(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) COMMENT '创建时间',
   `update_time` datetime(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) COMMENT '修改时间',
@@ -36,10 +37,9 @@ CREATE TABLE `count_record` (
   UNIQUE KEY `uk_request_no` (`request_no`),
   KEY `idx_dimension_id_count_id` (`dimension_id`, `count_id`),
   KEY `idx_create_time` (`create_time`)
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin COMMENT = '计次流水表'
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin COMMENT = '计次流水表';
 
-
-CREATE TABLE `count_cycle` (
+CREATE TABLE `count_cycle_xx` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增id',
   `create_time` datetime(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) COMMENT '创建时间',
   `update_time` datetime(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) COMMENT '修改时间',
@@ -52,7 +52,7 @@ CREATE TABLE `count_cycle` (
   PRIMARY KEY (`id`),
   KEY `idx_dimension_id_count_id` (`dimension_id`, `count_id`),
   KEY `idx_create_time` (`create_time`)
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin COMMENT = '计次周期表'
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin COMMENT = '计次周期表';
 
 
 

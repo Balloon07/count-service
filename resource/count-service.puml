@@ -1,0 +1,19 @@
+
+@startuml 创建计次配置
+start
+:创建计次配置;
+:计次配置参数校验;
+if(入参含有计次id？) then(yes)
+    :查询计次配置;
+    if(存在配置？) then(yes)
+        :更新计次配置 ;
+    else(no)
+        :Error 计次配置不存在;
+        end
+    endif
+else(no)
+    :插入计次配置;
+endif
+stop
+@enduml
+
