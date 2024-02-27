@@ -13,7 +13,9 @@ public enum CountErrorEnum {
 
     SYSTEM_ERROR(5000L, "服务异常"),
     PARAM_ERROR(5001L, "参数异常"),
-    CONFIG_NOT_FUND(5002L, "计次配置不存在，countId=%s")
+    CONFIG_NOT_FUND(5002L, "计次配置不存在，countId=%s"),
+    CONFIG_NOT_GOING_STATE(5002L, "计次配置不是going状态，countId=%s"),
+    TIME_UNIT_INVALID(5003L, "计次周期单位不合法，timeUnit=%s"),
 
     ;
 

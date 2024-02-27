@@ -17,3 +17,20 @@ endif
 stop
 @enduml
 
+@startuml 计次查询
+start
+:计次查询;
+:参数校验;
+if(存在配置&有效？) then(no)
+    :Error 计次配置无效;
+    end
+else(yes)
+    :查询计次周期记录;
+    if(存在记录？) then(yes)
+    :统计当前周期内有效的计次;
+    else(no)
+    endif
+    :Return 周期内计次统计信息;
+endif
+stop
+@enduml

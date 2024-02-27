@@ -18,7 +18,7 @@ B测计次配置count_config 和 C测计次流水count_record、count_cycle：
 - count_cycle 计次周期表：是用户在某计次下流水的汇总，用于计次查询和准入的判断；
 
 其中，count_record表和count_cycle表以dimension_id字段进行分库分表，来满足大数据量的存储。
-![](resource/计次-数据模型设计v2.jpg)
+![](resource/计次-数据模型设计v3.jpg)
 Refer：https://www.processon.com/v/6571657440125a40fd13310b
 
 
@@ -127,12 +127,12 @@ C测功能：
 - C侧api定义 ✈️
 - count_user数据源配置 ✈️
 - 数据库实体类和对应mapper ✈️
-- repository语义转换
-- sharding分库分表
+- repository层语义转换
 - 计次查询
 - 计次准入
 - 计次逆向
 - 用户计次纪录查询
+- sharding分库分表调整
 - C侧功能自测
 - 压力测试
 
