@@ -2,11 +2,10 @@ package com.balloon.core.service.impl;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 import com.balloon.common.CountException;
 import com.balloon.common.enums.CountErrorEnum;
-import com.balloon.common.util.CountCycleTimeUtil;
+import com.balloon.common.util.CycleTimeUtil;
 import com.balloon.core.repository.CountConfigRepository;
 import com.balloon.core.repository.CountCycleRepository;
 import com.balloon.core.repository.CountRecordRepository;
@@ -27,7 +26,6 @@ import com.balloon.count.api.common.enums.CountStateEnum;
 import com.balloon.count.api.common.enums.CycleTypeEnum;
 import com.balloon.count.api.common.enums.TimeUnitEnum;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.time.DateUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -95,7 +93,7 @@ public class CountUserServiceImpl implements CountUserService {
         } else if (StringUtils.equals(CycleTypeEnum.natural.name(), countRule.getCycleType())
                 && countRule.getTimeInterval() == 1) {
             // 2.cycleType=natural & timeInterval=1
-            String cycleTime = CountCycleTimeUtil.parseCycleValue(occurTime, countRule.getCycleType());
+            String cycleTime = CycleTimeUtil.parseCycleValue(occurTime, countRule.getTimeUnit());
             countNum = StringUtils.equals(cycleTime, cycleInfo.getCycleTime()) ? cycleInfo.getCycleCount() : 0;
         } else {
             // 3.cycleType=natural&&timeInterval!=1 || timeUnit=relative
@@ -103,7 +101,7 @@ public class CountUserServiceImpl implements CountUserService {
             if (CollectionUtils.isEmpty(recordList)) {
                 countNum = 0;
             } else {
-                Pair<Date, Date> currentCycle = CountCycleTimeUtil.parseCurrentCycle(occurTime, countRule.getCycleType());
+                Pair<Date, Date> currentCycle = CycleTimeUtil.parseCurrentCycle(occurTime, countRule);
                 countNum = recordList.stream().filter(record -> record.getRecordTime().after(currentCycle.getLeft()))
                         .map(CycleInfoModel.CycleRecord::getRecordNum).reduce(0, Integer::sum);
             }
