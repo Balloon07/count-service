@@ -44,7 +44,7 @@ public class CountUserServiceImpl implements CountUserService {
     @Autowired
     private CountRecordRepository recordRepository;
     @Autowired
-    private CountCycleRepository countCycleRepository;
+    private CountCycleRepository cycleRepository;
 
     @Override
     public CountQueryDto queryCount(CountQueryParam param) {
@@ -60,10 +60,10 @@ public class CountUserServiceImpl implements CountUserService {
             throw new CountException(CountErrorEnum.CONFIG_NOT_GOING_STATE, param.getCountId());
         }
         // 查询计次周期记录
-        CountCycleModel countCycle = recordRepository.queryCountCycle(param.getCountId(), param.getDimensionId());
+        CountCycleModel countCycle = cycleRepository.queryCountCycle(param.getCountId(), param.getDimensionId());
         // 统计当前周期内有效的计次
         Date occurTime = param.getOccurTime() != null ? param.getOccurTime() : new Date();
-        Integer currentCount = calEffectiveCount(configModel.getCountRule(), countCycle.getCycleInfo(), occurTime);
+        Integer currentCount = countCycle != null ? calEffectiveCount(configModel.getCountRule(), countCycle.getCycleInfo(), occurTime) : 0;
 
         // 封装信息
         CountQueryDto result = new CountQueryDto();
@@ -72,7 +72,9 @@ public class CountUserServiceImpl implements CountUserService {
         result.setState(configModel.getState());
         result.setStartTime(configModel.getStartTime());
         result.setEndTime(configModel.getEndTime());
-        result.setLimitCount(configModel.getCountRule().getTimeTotal());
+        result.setTimeInterval(configModel.getCountRule().getTimeInterval());
+        result.setTimeUnit(configModel.getCountRule().getTimeUnit());
+        result.setTimeLimitCount(configModel.getCountRule().getTimeTotal());
         result.setCurrentCount(currentCount);
         return result;
     }

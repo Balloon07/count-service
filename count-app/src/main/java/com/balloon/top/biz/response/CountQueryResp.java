@@ -1,6 +1,9 @@
 package com.balloon.top.biz.response;
 
 import com.balloon.count.api.common.enums.CountStateEnum;
+import com.balloon.count.api.common.enums.CycleTypeEnum;
+import com.balloon.count.api.common.enums.TimeUnitEnum;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -9,6 +12,7 @@ import java.util.Date;
  * @author 王思远
  * @date 2024-02-26 21:01
  */
+@Data
 public class CountQueryResp implements Serializable {
 
     /**
@@ -37,9 +41,25 @@ public class CountQueryResp implements Serializable {
     private Date endTime;
 
     /**
-     * 计次限制数量
+     * 周期类型 {@link CycleTypeEnum}
      */
-    private Integer limitCount;
+    private String cycleType;
+
+    /**
+     * 周期间隔
+     * 2天3次：timeInterval=2, timeUnit=day, limitCount=3
+     */
+    private Integer timeInterval;
+
+    /**
+     * 周期单位 {@link TimeUnitEnum}
+     */
+    private String timeUnit;
+
+    /**
+     * 周期限制数量
+     */
+    private Integer timeLimitCount;
 
     /**
      * 当前计次数量

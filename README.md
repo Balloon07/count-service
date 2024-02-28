@@ -113,22 +113,22 @@ count-service 计次服务快速开始：
 ## 八、开发进度
 
 B测功能：✅
-- count-api/app项目分层设计  ✈️
-- 数据库实体类和对应mapper  ✈️
-- B侧api定义  ✈️
-- 生成计次配置id  ✈️
-- count_config数据源配置  ✈️
-- repository层语义转换  ✈️
-- 创建计次配置实现  ✈️
-- B侧api功能自测 ✈️
+- count-api/app项目分层设计 ✔️️
+- 数据库实体类和对应mapper ✔️️
+- B侧api定义 ✔️️️
+- 生成计次配置id ✔️️️
+- count_config数据源配置 ✔️️️
+- repository层语义转换 ✔️️️
+- 创建计次配置实现 ✔️️️
+- B侧api功能自测 ✔️️️
 
 
 C测功能：
-- C侧api定义 ✈️
-- count_user数据源配置 ✈️
-- 数据库实体类和对应mapper ✈️
-- repository层语义转换
-- 计次查询
+- C侧api定义 ✔️️️
+- count_user数据源配置 ✔️️️
+- 数据库实体类和对应mapper ✔️️️
+- repository层语义转换 ✔️
+- 计次查询 ✔️
 - 计次准入
 - 计次逆向
 - 用户计次纪录查询
