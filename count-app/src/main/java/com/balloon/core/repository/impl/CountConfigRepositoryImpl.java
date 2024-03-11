@@ -19,10 +19,9 @@ public class CountConfigRepositoryImpl implements CountConfigRepository {
     private CountConfigDao countConfigDao;
 
     @Override
-    public String create(CountConfigModel model) {
+    public int create(CountConfigModel model) {
         CountConfigEntity entity = CountConfigConverter.convertToEntity(model);
-        countConfigDao.insertSelective(entity);
-        return entity.getCountId();
+        return countConfigDao.insertSelective(entity);
     }
 
     @Override

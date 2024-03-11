@@ -11,8 +11,17 @@
         select
         <include refid="Base_Column_List"/>
         from count_cycle
-        where count_id = #{countId,jdbcType=VARCHAR}
-            and dimension_id = #{dimensionId,jdbcType=VARCHAR}
+        where count_id = #{countId}
+        and dimension_id = #{dimensionId}
         order by id desc limit 1;
     </select>
+
+    <update id="updateByCountIdDimensionId">
+        update count_cycle
+        set count_cycle_info = #{cycleInfo}
+        where count_id = #{countId}
+          and dimension_id = #{dimensionId}
+        limit 1;
+    </update>
+
 </mapper>

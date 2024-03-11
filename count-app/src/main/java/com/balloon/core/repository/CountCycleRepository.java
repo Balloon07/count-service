@@ -8,5 +8,9 @@ import com.balloon.core.repository.model.CountCycleModel;
  */
 public interface CountCycleRepository {
 
-    CountCycleModel queryCountCycle(String countId, String dimensionId);
+    int insert(CountCycleModel countCycle);
+
+    int updateByCountIdDimensionId(String countId, String dimensionId, String cycleInfo);
+
+    CountCycleModel queryByCountIdDimensionId(String countId, String dimensionId);
 }

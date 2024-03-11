@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.balloon.integration.dal.count_user.CountRecordDao">
+    <resultMap id="BaseResultMap" type="com.balloon.integration.dal.count_user.entity.CountRecordEntity"
+               extends="com.balloon.integration.dal.count_user.mapper.CountRecordMapper.BaseResultMap"/>
+    <sql id="Base_Column_List">
+        <include refid="com.balloon.integration.dal.count_user.mapper.CountRecordMapper.Base_Column_List"/>
+    </sql>
+
+
+    <select id="getByRequestNo" resultType="com.balloon.integration.dal.count_user.entity.CountRecordEntity">
+        select
+        <include refid="Base_Column_List"/>
+        from count_record
+        where request_no = #{requestNo}
+        limit 1;
+    </select>
+</mapper>

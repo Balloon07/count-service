@@ -10,5 +10,10 @@ import org.apache.ibatis.annotations.Param;
  */
 public interface CountCycleDao extends CountCycleMapper {
 
-    CountCycleEntity getByCountIdDimensionId(@Param("countId") String countId, @Param("dimensionId") String dimensionId);
+    CountCycleEntity getByCountIdDimensionId(@Param("countId") String countId,
+                                             @Param("dimensionId") String dimensionId);
+
+    int updateByCountIdDimensionId(@Param("countId") String countId,
+                                   @Param("dimensionId") String dimensionId,
+                                   @Param("cycleInfo") String cycleInfo);
 }

@@ -17,8 +17,16 @@ public class IDGenerator {
         return dateFormat.format(new Date()) + random(8);
     }
 
-    private static String random(int len) {
-        return UUID.randomUUID().toString().replace("-", "").substring(0, len);
+    public static String generateUUID() {
+        return random(null);
+    }
+
+    private static String random(Integer len) {
+        String str = UUID.randomUUID().toString().replace("-", "");
+        if (len != null) {
+            return str.substring(0, len);
+        }
+        return str;
     }
 
 }

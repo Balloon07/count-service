@@ -19,7 +19,18 @@ public class CountCycleRepositoryImpl implements CountCycleRepository {
     private CountCycleDao countCycleDao;
 
     @Override
-    public CountCycleModel queryCountCycle(String countId, String dimensionId) {
+    public int insert(CountCycleModel countCycle) {
+        CountCycleEntity entity = CountCycleConverter.convertToEntity(countCycle);
+        return countCycleDao.insertSelective(entity);
+    }
+
+    @Override
+    public int updateByCountIdDimensionId(String countId, String dimensionId, String cycleInfo) {
+        return countCycleDao.updateByCountIdDimensionId(countId, dimensionId, cycleInfo);
+    }
+
+    @Override
+    public CountCycleModel queryByCountIdDimensionId(String countId, String dimensionId) {
         CountCycleEntity entity = countCycleDao.getByCountIdDimensionId(countId, dimensionId);
         return CountCycleConverter.convertToModel(entity);
     }

@@ -34,3 +34,32 @@ else(yes)
 endif
 stop
 @enduml
+
+@startuml 计次准入
+start
+:计次准入;
+:参数校验;
+:查询计次配置;
+if(存在配置&有效？) then (no)
+    :Error 计次配置无效;
+    end
+else (yes)
+    :查询计次流水;
+        if(存在计次流水？) then(yes)
+            :查询计次周期记录;
+            :计算当前周期有效的计次;
+            if(计次达到上限？) then (yes)
+                :插入计次流水;
+                :插入/更新计次周期记录;
+                :Return 计次准入结果;
+            else (no)
+                :Error 计次达到上限;
+                end
+            endif
+        else(no)
+            :Error 计次准入幂等;
+            end
+        endif
+endif
+stop
+@enduml

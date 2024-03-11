@@ -25,4 +25,16 @@ public class CountCycleConverter {
         return model;
     }
 
+    public static CountCycleEntity convertToEntity(CountCycleModel model) {
+        if (model == null) {
+            return null;
+        }
+        CountCycleEntity entity = new CountCycleEntity();
+        BeanUtils.copyProperties(model, entity, "countRule", "extendInfo");
+        entity.setCountCycleInfo(JsonUtil.toJson(model.getCycleInfo()));
+        entity.setExtendInfo(JsonUtil.toJson(model.getExtendInfo()));
+        return entity;
+    }
+
+
 }

@@ -8,7 +8,7 @@ import com.balloon.core.repository.model.CountConfigModel;
  */
 public interface CountConfigRepository {
 
-    String create(CountConfigModel model);
+    int create(CountConfigModel model);
 
     int updateByCountId(CountConfigModel model);
 
