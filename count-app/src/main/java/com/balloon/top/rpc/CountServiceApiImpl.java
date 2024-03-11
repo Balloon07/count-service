@@ -42,7 +42,14 @@ public class CountServiceApiImpl implements CountServiceApi {
 
     @Override
     public Result<CountInsertDto> insertCount(CountInsertParam param) {
-        return null;
+        try {
+            CountInsertDto result = countUserService.insertCount(param);
+            log.info("计次准入, param={} result={}", JsonUtil.toJson(param), JsonUtil.toJson(result));
+            return Result.ofSuccess(result);
+        } catch (Throwable e) {
+            log.error("计次准入, param={}", JsonUtil.toJson(param), e);
+            return ExceptionUtil.toResult(e);
+        }
     }
 
     @Override

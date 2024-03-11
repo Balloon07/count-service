@@ -88,9 +88,11 @@ public class CountConfigServiceImpl implements CountConfigService {
         Assert.notNull(DimensionTypeEnum.getByName(param.getDimensionType()), "计次维度dimensionType不能为空且必须符合约定类型");
         Assert.notNull(param.getStartTime(), "计次周期startTime不能为空");
         Assert.notNull(param.getEndTime(), "计次周期endTime不能为空");
-        Assert.notNull(CycleTypeEnum.getByName(param.getCycleType()), "周期类型cycleType不能为空且必须符合约定类型");
-        Assert.notNull(param.getTimeInterval(), "周期间隔timeInterval不能为空");
         Assert.notNull(TimeUnitEnum.getByName(param.getTimeUnit()), "周期单位timeUnit不能为空且必须符合约定类型");
+        if (!StringUtils.equals(param.getTimeUnit(), TimeUnitEnum.life.name())) {
+            Assert.notNull(CycleTypeEnum.getByName(param.getCycleType()), "周期类型cycleType不能为空且必须符合约定类型");
+            Assert.notNull(param.getTimeInterval(), "周期间隔timeInterval不能为空");
+        }
         Assert.notNull(param.getTimeTotal(), "周期次数timeTotal不能为空");
         Assert.hasText(param.getOperator(), "操作人operator不能为空");
     }

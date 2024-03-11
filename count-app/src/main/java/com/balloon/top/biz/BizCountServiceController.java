@@ -3,9 +3,12 @@ package com.balloon.top.biz;
 import com.balloon.common.util.ExceptionUtil;
 import com.balloon.common.util.JsonUtil;
 import com.balloon.core.service.CountUserService;
+import com.balloon.count.api.client.dto.CountInsertDto;
 import com.balloon.count.api.client.dto.CountQueryDto;
+import com.balloon.count.api.client.param.CountInsertParam;
 import com.balloon.count.api.client.param.CountQueryParam;
 import com.balloon.count.api.common.Result;
+import com.balloon.top.biz.request.CountInsertRequest;
 import com.balloon.top.biz.request.CountQueryRequest;
 import com.balloon.top.biz.response.CountQueryResp;
 import lombok.extern.slf4j.Slf4j;
@@ -40,6 +43,22 @@ public class BizCountServiceController {
             return Result.ofSuccess(resp);
         } catch (Throwable e) {
             log.error("计次查询, req={}", JsonUtil.toJson(req), e);
+            return ExceptionUtil.toResult(e);
+        }
+    }
+
+    @PostMapping("insertCount")
+    Result<CountQueryResp> insertCount(@RequestBody CountInsertRequest req) {
+        try {
+            CountInsertParam param = new CountInsertParam();
+            BeanUtils.copyProperties(req, param);
+            CountInsertDto countInsertDto = countUserService.insertCount(param);
+            CountQueryResp resp = new CountQueryResp();
+            BeanUtils.copyProperties(countInsertDto, resp);
+            log.info("计次准入, req={} resp={}", JsonUtil.toJson(req), JsonUtil.toJson(resp));
+            return Result.ofSuccess(resp);
+        } catch (Throwable e) {
+            log.error("计次准入, req={}", JsonUtil.toJson(req), e);
             return ExceptionUtil.toResult(e);
         }
     }

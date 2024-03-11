@@ -7,7 +7,7 @@
         <include refid="com.balloon.integration.dal.count_user.mapper.CountCycleMapper.Base_Column_List"/>
     </sql>
 
-    <select id="getByCountIdDimensionId" resultType="com.balloon.integration.dal.count_user.entity.CountCycleEntity">
+    <select id="getByCountIdDimensionId" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from count_cycle

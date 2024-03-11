@@ -4,7 +4,6 @@ import com.balloon.common.CountException;
 import com.balloon.common.enums.CountErrorEnum;
 import com.balloon.common.util.CycleTimeUtil;
 import com.balloon.common.util.IDGenerator;
-import com.balloon.common.util.JsonUtil;
 import com.balloon.core.repository.CountConfigRepository;
 import com.balloon.core.repository.CountCycleRepository;
 import com.balloon.core.repository.CountRecordRepository;
@@ -21,22 +20,24 @@ import com.balloon.count.api.client.param.CountUserRecordParam;
 import com.balloon.count.api.common.enums.CountStateEnum;
 import com.balloon.count.api.common.enums.CycleTypeEnum;
 import com.balloon.count.api.common.enums.TimeUnitEnum;
-import com.balloon.integration.dal.count_user.entity.CountRecordEntity;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
-import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 
+import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
@@ -55,7 +56,8 @@ public class CountUserServiceImpl implements CountUserService {
     private CountCycleRepository cycleRepository;
     @Autowired
     private StringRedisTemplate redisTemplate;
-
+    @Resource(name = "countUserTransactionManager")
+    private DataSourceTransactionManager transactionManager;
 
     @Override
     public CountQueryDto queryCount(CountQueryParam param) {
@@ -100,7 +102,7 @@ public class CountUserServiceImpl implements CountUserService {
      */
     private Integer calEffectiveCount(CountRuleModel countRule, CycleInfoModel cycleInfo, Date occurTime) {
         Integer countNum = 0;
-        if (StringUtils.equals(TimeUnitEnum.life.name(), countRule.getCycleType())) {
+        if (StringUtils.equals(TimeUnitEnum.life.name(), countRule.getTimeUnit())) {
             // 1.timeUnit=life
             countNum = cycleInfo.getCycleCount();
         } else if (StringUtils.equals(CycleTypeEnum.natural.name(), countRule.getCycleType())
@@ -122,6 +124,37 @@ public class CountUserServiceImpl implements CountUserService {
         return countNum;
     }
 
+    @Override
+    @Transactional(value = "countUserTransactionManager", rollbackFor = Throwable.class)
+    public CountInsertDto insertCount(CountInsertParam param) {
+
+        CountRecordModel model = new CountRecordModel();
+        model.setCreateTime(new Date());
+        model.setUpdateTime(new Date());
+        model.setRequestNo(IDGenerator.generateId());
+        model.setDimensionType("");
+        model.setDimensionId("");
+        model.setCountId("");
+        model.setCountType("");
+        model.setCountNum(0);
+        model.setOccurTime(new Date());
+        model.setExtendInfo(Maps.newHashMap());
+        recordRepository.insert(model);
+        Integer num = 1 / 0;
+        CountCycleModel model1 = new CountCycleModel();
+        model1.setCreateTime(new Date());
+        model1.setUpdateTime(new Date());
+        model1.setDimensionType("");
+        model1.setDimensionId("");
+        model1.setCountId("");
+        model1.setCountType("");
+        model1.setCycleInfo(new CycleInfoModel());
+        model1.setExtendInfo(Maps.newHashMap());
+        cycleRepository.insert(model1);
+        return new CountInsertDto();
+    }
+
+/*
     @Override
     @Transactional(transactionManager = "countUserTransactionManager", rollbackFor = Exception.class)
     public CountInsertDto insertCount(CountInsertParam param) {
@@ -196,6 +229,8 @@ public class CountUserServiceImpl implements CountUserService {
         }
     }
 
+ */
+
     /**
      * 封装当前周期内的计次信息
      *
@@ -210,7 +245,7 @@ public class CountUserServiceImpl implements CountUserService {
         String cycleTime = null;
         List<CycleInfoModel.CycleRecord> cycleRecordList = Lists.newArrayList();
 
-        if (StringUtils.equals(TimeUnitEnum.life.name(), countRule.getCycleType())) {
+        if (StringUtils.equals(TimeUnitEnum.life.name(), countRule.getTimeUnit())) {
             // 1.timeUnit=life
             cycleCount = oldCycleInfo != null ? oldCycleInfo.getCycleCount() + countNum : countNum;
             cycleTime = TimeUnitEnum.life.name();
@@ -219,19 +254,18 @@ public class CountUserServiceImpl implements CountUserService {
                 && countRule.getTimeInterval() == 1) {
             // 2.cycleType=natural & timeInterval=1
             cycleTime = CycleTimeUtil.parseCycleValue(occurTime, countRule.getTimeUnit());
-            cycleCount = StringUtils.equals(cycleTime, oldCycleInfo.getCycleTime()) ? oldCycleInfo.getCycleCount() + countNum : countNum;
+            cycleCount = oldCycleInfo == null || !StringUtils.equals(cycleTime, oldCycleInfo.getCycleTime()) ? countNum : oldCycleInfo.getCycleCount();
         } else {
             // 3.cycleType=natural&&timeInterval!=1 || timeUnit=relative
-            List<CycleInfoModel.CycleRecord> oldRecordList = oldCycleInfo.getCycleRecordList();
             CycleInfoModel.CycleRecord cycleRecord = new CycleInfoModel.CycleRecord();
             cycleRecord.setRecordNum(countNum);
             cycleRecord.setRecordTime(occurTime);
-            if (CollectionUtils.isEmpty(oldRecordList)) {
+            if (oldCycleInfo == null || CollectionUtils.isEmpty(oldCycleInfo.getCycleRecordList())) {
                 cycleCount = countNum;
                 cycleRecordList.add(cycleRecord);
             } else {
                 Pair<Date, Date> currentCycle = CycleTimeUtil.parseCurrentCycle(occurTime, countRule);
-                cycleRecordList = oldRecordList.stream().filter(record -> record.getRecordTime().after(currentCycle.getLeft())).collect(Collectors.toList());
+                cycleRecordList = oldCycleInfo.getCycleRecordList().stream().filter(record -> record.getRecordTime().after(currentCycle.getLeft())).collect(Collectors.toList());
                 cycleRecordList.add(cycleRecord);
             }
         }
@@ -244,7 +278,7 @@ public class CountUserServiceImpl implements CountUserService {
 
     private CountRecordModel buildCountRecord(CountConfigModel configModel, CountInsertParam param) {
         CountRecordModel countRecord = new CountRecordModel();
-        countRecord.setRequestNo(IDGenerator.generateUUID());
+        countRecord.setRequestNo(param.getRequestNo() == null ? IDGenerator.generateUUID() : param.getRequestNo());
         countRecord.setDimensionType(configModel.getDimensionType());
         countRecord.setDimensionId(param.getDimensionId());
         countRecord.setCountId(param.getCountId());
